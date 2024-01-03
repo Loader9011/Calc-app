@@ -36,7 +36,32 @@ const CalcButton = styled.button`
 
 export default function Calculator({children}: Props ) {
   const [value, setValue] = useState("")
+  const [addValue, setAddValue] = useState(Number)
+  const [minusValue, setMinusValue] = useState(Number)
 
+  let number: number[] = [];
+
+  const Clear = () => {
+    setValue("")
+    setAddValue(Number())
+    setMinusValue(Number())
+  }
+  
+  const Calculate = () => {
+    let numberValue = Number(value)
+    console.log(numberValue)
+    
+  }
+  const Plus = () => {
+    let numberValue = Number(value)
+    number.push(numberValue)
+    console.log(number)
+    
+  }
+  const Minus = () => {
+    let numberValue = Number(value)
+    console.log(numberValue)
+  }
 
   return (
     <div>
@@ -55,7 +80,10 @@ export default function Calculator({children}: Props ) {
           <CalcButton value={8} onClick={(e) => setValue(value.concat(e.currentTarget.value))}>8</CalcButton>
           <CalcButton value={9} onClick={(e) => setValue(value.concat(e.currentTarget.value))}>9</CalcButton>
           <CalcButton value={0} onClick={(e) => setValue(value.concat(e.currentTarget.value))}>0</CalcButton>
-          <CalcButton onClick={() => {setValue("")}}>C</CalcButton>
+          <CalcButton onClick={Clear}>C</CalcButton>
+          <CalcButton onClick={Calculate}>=</CalcButton>
+          <CalcButton onClick={Plus}>+</CalcButton>
+          <CalcButton onClick={Minus}>-</CalcButton>
         </Grid>
         
     </Wrapper>

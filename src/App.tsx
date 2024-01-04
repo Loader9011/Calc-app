@@ -6,16 +6,26 @@ import Calculator from "./components/calculator";
 import Display from "./components/display";
 
 function App() {
-  const [theme, setTheme] = useState(lightTheme);
+  const [theme, setTheme] = useState(setSavedTheme);
 
- 
+  function setSavedTheme() {
+    let getSavedTheme = localStorage.getItem("savedTheme")
+    let savedTheme = JSON.parse(getSavedTheme as string);
+    return savedTheme
+  }
+
+  useEffect(() => {
+    let currentTheme = theme;
+    localStorage.setItem("savedTheme", JSON.stringify(currentTheme))
+  }, [theme])
+
 
   
 
 return (
     <ThemeProvider theme={theme}>
       <GlobalStyles/>
-      <Header theme={theme} setTheme={setTheme}></Header>
+      <Header theme={setSavedTheme} setTheme={setTheme}></Header>
       <Calculator>
         <></>
       </Calculator>

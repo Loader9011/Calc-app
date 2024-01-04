@@ -45,7 +45,7 @@ export default function Calculator({children}: Props ) {
   const [addValue, setAddValue] = useState(Number)
   const [minusValue, setMinusValue] = useState(Number)
   const [array,setArray] = useState<number[]>([Number(value)]);
-  const [usedValuesArray, SetUsedValuesArray] = useState<number[]>([Number(value)]);
+  const [usedValuesArray, SetUsedValuesArray] = useState<number[]>([]);
 
 
   const Clear = () => {
@@ -58,28 +58,26 @@ export default function Calculator({children}: Props ) {
   
   const Calculate = () => {
     let numberValue = Number(value)
-    console.log(numberValue)
     array.push(numberValue) 
-    console.log(array)
     const sumResult = array.reduce((next, number) => {
       return next + number;
     }, 0);
     Clear()
     setValue(String(sumResult))
-    
+    console.log(array)
+    console.log(usedValuesArray)
   }
   const Plus = () => {
     let numberValue = Number(value)
-    setArray(array => [...array,numberValue] );
-    SetUsedValuesArray(array => [...array,numberValue] );
+    setArray(array => [...array, numberValue] );
     usedValuesArray.push(numberValue) 
     setValue("")
-    console.log("used values array  ")
-    console.log(usedValuesArray)
   }
   const Minus = () => {
     let numberValue = Number(value)
-    console.log(numberValue)
+    setArray(array => [...array, numberValue] );
+    usedValuesArray.push(-Math.abs(numberValue)) 
+    setValue("")
   }
 
   const Backspace = () => {
@@ -104,7 +102,7 @@ export default function Calculator({children}: Props ) {
     <div>
     <Wrapper>
       <DisplayWrapper>
-        <Display value={value}></Display>
+        <Display usedValuesArrary={usedValuesArray} value={value}></Display>
       </DisplayWrapper>
       <Grid onKeyDown={handleKeyDown}>
         <CalcButton value={1} onClick={(e) => setValue(value.concat(e.currentTarget.value))}>1</CalcButton>

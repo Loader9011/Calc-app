@@ -4,7 +4,7 @@ import styled from 'styled-components'
 type Props = {
   value: string,
   children?: React.ReactNode,
-  usedValuesArrary: number[]
+  usedValuesArrary?: number[]
 }
 
 const Values = styled.div`
@@ -17,11 +17,10 @@ const ValueLine = styled.div`
 `
 
 
-export default function Display({value, children, usedValuesArrary}: Props) {
+export default function Display({value, children}: Props) {
   return (
     <Values>
-      {usedValuesArrary.map((item) => {return (<ValueLine>{item}{item >= 0 ? " +" : " -"}</ValueLine>)})}
-      {value}
+      
     </Values>
     
   )

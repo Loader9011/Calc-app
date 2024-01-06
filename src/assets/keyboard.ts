@@ -6,16 +6,10 @@ export const Backspace = (value: string, setValue: React.Dispatch<React.SetState
   } 
 
 
-export const handleKeyDown = (value: string, setValue: React.Dispatch<React.SetStateAction<string>>, Backspace: Function, event: { key: string}) => {
+export const handleKeyDown = (value: string, setValue: React.Dispatch<React.SetStateAction<string>>, Backspace: Function, event: KeyboardEvent) => {
     if (event.key === 'Backspace') {
      Backspace()
     }
-    document.addEventListener('keydown', function (event) {
-      numbers.forEach(element => {
-        if(event.key === String(element)){
-          setValue(value.concat(String(element)))
-        }
-      });
-    })
+    
   };
 

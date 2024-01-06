@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 type Props = {
   value: string,
-  children?: React.ReactNode,
+  result: number,
   usedValuesArrary?: number[]
 }
 
@@ -17,11 +17,17 @@ const ValueLine = styled.div`
 `
 
 
-export default function Display({value, children}: Props) {
+export default function Display({value, result}: Props) {
   return (
-    <Values>
-      
-    </Values>
+    <ValueLine> 
+      <Values>
+        {value}
+      </Values>
+      <Values>
+        {`= `}{result}
+      </Values>
+    </ValueLine>
+    
     
   )
 }

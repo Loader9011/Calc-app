@@ -10,12 +10,15 @@ function App() {
 
   function setSavedTheme() {
     let getSavedTheme = localStorage.getItem("savedTheme")
+    if(!getSavedTheme){
+      setTheme(lightTheme)
+    }
     let savedTheme = JSON.parse(getSavedTheme as string);
     return savedTheme
   }
 
   useEffect(() => {
-    let currentTheme = theme;
+    const currentTheme = theme;
     localStorage.setItem("savedTheme", JSON.stringify(currentTheme))
   }, [theme])
 

@@ -1,0 +1,7 @@
+document.addEventListener('keydown', function (event) {
+      numbers.forEach(element => {
+        if(event.key === String(element)){
+          setValue(value.concat(String(element)))
+        }
+      });
+    })

@@ -11,29 +11,40 @@ type Props = {
 
 export default function Calculator({children}: Props ) {
   const [value, setValue] = useState("")
+  const [number, setNumber] = useState(0)
   const [firstValue, setfirstValue] = useState(0)
   const [secondValue, setSecondValue] = useState(0)
   const [result, setResult] = useState(0)
   const [resultArray, setResultArray] = useState([firstValue, secondValue])
 
 
-  function Calculate(){
-    const result = resultArray.reduce((next, number) => {
-      return next + number
-    }, 0)
-    resultArray[0] = result
-    resultArray[1] = 0
-    console.log(resultArray)
-    setResult(result)
+
+
+  useEffect(() => {
+    setfirstValue(result)
+    setSecondValue(0)
+  }, [result])
+
+
+  function Calculate(operation: string){
+    if(operation === "+"){
+      setResult(firstValue + secondValue)
+    }
+    if(operation === "-"){
+      setResult(firstValue - secondValue)
+    }
+    if(operation === "="){
+
+    }
+    console.log(result)
   }
  
   const Plus = () => {
     if(!Number.isNaN(Number(value[value.length - 1]))){
       setValue(value + `+`)
-      let number = Number(value.substring(0, value.length))
+      setNumber(0)
+      console.log(value)
       console.log(number)
-      setResult(resultArray[1] = number)
-      Calculate()
     }
   }
   const Minus = () => {
@@ -80,8 +91,8 @@ export default function Calculator({children}: Props ) {
         <CalcButton value={9} onClick={(e) => typeNumber(e)}>9</CalcButton>
         <CalcButton value={0} onClick={(e) => typeNumber(e)}>0</CalcButton>
         <CalcButton onClick={Clear}>C</CalcButton>
-        <CalcButton onClick={Calculate}>=</CalcButton>
-        <CalcButton onClick={Plus}>+</CalcButton>
+        <CalcButton onClick={() => {Calculate("")}}>=</CalcButton>
+        <CalcButton value={"+"} onClick={Plus}>+</CalcButton>
         <CalcButton onClick={Minus}>-</CalcButton>
         <CalcButton onClick={Multiply}>*</CalcButton>
         <CalcButton onClick={Divide}>/</CalcButton>

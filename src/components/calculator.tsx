@@ -17,9 +17,52 @@ export default function Calculator({children}: Props ) {
   const [result, setResult] = useState(0)
   const [resultArray, setResultArray] = useState([firstValue, secondValue])
 
+  
+
+  type ResultType = {[key: string]: any}
+
+  class CommandCalculator {
+    actions: ResultType = []
+    actionIndex: number
+    constructor() {
+        this.actions = [];
+        this.actionIndex = 0;
+    }
+
+    add(a: number, b: number) {
+        return a + b;
+    }
+
+    multiply(a: number, b: number) {
+        return a * b;
+    }
+
+    execute(command: string, args: number) {
+        this.actions[this.actionIndex] = { command, args}
+        this.actionIndex++;
+        console.log(this.actions)
+    }
+    getValue() {
+        let value = 0;
+        for(let i = 0; i < this.actionIndex; ++i) {
+          const { command, args } = this.actions[i] as ResultType;
+          if(this[command]) {
+            value = this[command](value, args)
+          }
+        }
+
+    }
+    }
 
 
+    const calculator = new CommandCalculator();
+    calculator.execute("add", 5);
 
+    calculator.execute("multiply", 10);
+
+    console.log(calculator.getValue())
+
+    
   useEffect(() => {
     setfirstValue(result)
     setSecondValue(0)
@@ -43,6 +86,7 @@ export default function Calculator({children}: Props ) {
     if(!Number.isNaN(Number(value[value.length - 1]))){
       setValue(value + `+`)
       setNumber(0)
+      setSecondValue(result + number)
       console.log(value)
       console.log(number)
     }
@@ -76,6 +120,7 @@ export default function Calculator({children}: Props ) {
   return (
     <div>
     <Wrapper>
+      <div></div>
       <DisplayWrapper onKeyDown={(e: KeyboardEvent) => handleKeyDown(value, setValue, Backspace, e as any)}>
         <Display result={result} value={value}></Display>
       </DisplayWrapper>

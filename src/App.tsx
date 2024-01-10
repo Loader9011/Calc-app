@@ -5,6 +5,7 @@ import Header from "./components/header";
 import Calculator from "./components/calculator";
 import Display from "./components/display";
 import PatterCommand from "./components/patternCommand";
+import Qwe from "./components/qwe";
 
 function App() {
   const [theme, setTheme] = useState(setSavedTheme);
@@ -30,8 +31,8 @@ return (
     <ThemeProvider theme={theme}>
       <GlobalStyles/>
       <Header theme={setSavedTheme} setTheme={setTheme}></Header>
-      <PatterCommand></PatterCommand>
-
+      <Calculator><div></div></Calculator>
+    {/* <PatterCommand></PatterCommand> */}
     </ThemeProvider>
   );
 }

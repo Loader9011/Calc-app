@@ -13,6 +13,7 @@ export default function PatterCommand() {
     add(a, b) {
       return a + b;
     }
+    
   
     multiply(a, b) {
       return a * b;
@@ -34,7 +35,7 @@ export default function PatterCommand() {
   
       for(let i = 0; i < this.actionIndex; ++i) {
         const { command, args} = this.actions[i];
-        console.log(this.actions[i])
+        console.log(this[command](value,args)) 
         if(this[command]) {
           value = this[command](value, args)
         }

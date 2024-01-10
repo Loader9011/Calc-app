@@ -1,115 +1,104 @@
-import React, { BaseSyntheticEvent, KeyboardEvent, MouseEventHandler, useEffect, useState } from 'react'
+import React, { BaseSyntheticEvent, Key, KeyboardEvent, MouseEventHandler, useEffect, useState } from 'react'
 import {Wrapper, DisplayWrapper, Grid, CalcButton} from './calculatorStyles/calcComponentStyle'
 import Display from './display'
 import { Backspace, handleKeyDown } from '../assets/keyboard'
+import { getValue } from '@testing-library/user-event/dist/utils'
 
 type Props = {
   children: React.ReactNode,
 }
+interface romanType {
+  [index: number]: object;
+}
 
+class CommandCalculator {
+  actions: romanType = []
+  actionIndex: number
+  constructor() {
+      this.actions = [];
+      this.actionIndex = 0;
+  }
 
+  add(a: number, b: number) {
+      return a + b;
+  }
+
+  minus(a: number, b: number) {
+    return a - b;
+  }
+
+  multiply(a: number, b: number) {
+      return a * b;
+  }
+
+  divide(a: number, b: number) {
+    return a / b;
+  }
+
+  execute(command: string, args: number) {
+      this.actions[this.actionIndex] = { command, args } as any
+      this.actionIndex++;
+  }
+  getValue() {
+      let value = 0;
+      let func: Function
+      for(let i = 0; i < this.actionIndex; ++i) {
+        const { command, args }: any = this.actions[i];
+        if(this[command as keyof typeof this.actions[typeof i]]) {
+          func = this[command as keyof typeof this.actions[typeof i]]
+          value = func(value, args)
+        }
+      }
+      return value
+  }
+  }
+
+  const operations = {
+    add: "add",
+    minus: "minus",
+    multiply: "multiply",
+    divide: "divide"
+  }
+
+  const calculator = new CommandCalculator();
+  let result = 0;
+  const Plus = (result: number, setValue: Function) => {
+    setValue("")
+    calculator.execute(operations.add, result)
+    console.log(result)
+  }
+  const Minus = (result: number, setValue: Function) => {
+    setValue("")
+    calculator.execute(operations.minus, result)
+    console.log(result)
+    setValue("")
+  }
+  const Multiply = (result: number, setValue: Function) => {
+    setValue("")
+    calculator.execute(operations.multiply, result)
+    console.log(result)
+  }
+  const Divide = (result: number, setValue: Function) => {
+    setValue("")
+    calculator.execute(operations.divide, result)
+    console.log(result)
+  }
 
 export default function Calculator({children}: Props ) {
   const [value, setValue] = useState("")
-  const [number, setNumber] = useState(0)
-  const [firstValue, setfirstValue] = useState(0)
-  const [secondValue, setSecondValue] = useState(0)
-  const [result, setResult] = useState(0)
-  const [resultArray, setResultArray] = useState([firstValue, secondValue])
-
   
-
-  type ResultType = {[key: string]: any}
-
-  class CommandCalculator {
-    actions: ResultType = []
-    actionIndex: number
-    constructor() {
-        this.actions = [];
-        this.actionIndex = 0;
-    }
-
-    add(a: number, b: number) {
-        return a + b;
-    }
-
-    multiply(a: number, b: number) {
-        return a * b;
-    }
-
-    execute(command: string, args: number) {
-        this.actions[this.actionIndex] = { command, args}
-        this.actionIndex++;
-        console.log(this.actions)
-    }
-    getValue() {
-        let value = 0;
-        for(let i = 0; i < this.actionIndex; ++i) {
-          const { command, args } = this.actions[i] as ResultType;
-          if(this[command]) {
-            value = this[command](value, args)
-          }
-        }
-
-    }
-    }
-
-
-    const calculator = new CommandCalculator();
-    calculator.execute("add", 5);
-
-    calculator.execute("multiply", 10);
-
-    console.log(calculator.getValue())
-
-    
   useEffect(() => {
-    setfirstValue(result)
-    setSecondValue(0)
-  }, [result])
+    result = calculator.getValue()
+  }, [value, result])
 
 
-  function Calculate(operation: string){
-    if(operation === "+"){
-      setResult(firstValue + secondValue)
-    }
-    if(operation === "-"){
-      setResult(firstValue - secondValue)
-    }
-    if(operation === "="){
-
-    }
-    console.log(result)
-  }
- 
-  const Plus = () => {
-    if(!Number.isNaN(Number(value[value.length - 1]))){
-      setValue(value + `+`)
-      setNumber(0)
-      setSecondValue(result + number)
-      console.log(value)
-      console.log(number)
-    }
-  }
-  const Minus = () => {
-    if(!Number.isNaN(Number(value[value.length - 1]))){
-      setValue(value + `-`)
-    }
-  }
-  const Multiply = () => {
-    if(!Number.isNaN(Number(value[value.length - 1]))){
-      setValue(value + `*`)
-    }
-  }
-  const Divide = () => {
-    if(!Number.isNaN(Number(value[value.length - 1]))){
-      setValue(value + `/`)
-    }
+  function Calculate(){ 
+    result = calculator.getValue()
+    setValue(String(result))
   }
 
   const Clear = () => {
     setValue("")
-    setResultArray([0, 0])
   }
   
   
@@ -120,11 +109,10 @@ export default function Calculator({children}: Props ) {
   return (
     <div>
     <Wrapper>
-      <div></div>
       <DisplayWrapper onKeyDown={(e: KeyboardEvent) => handleKeyDown(value, setValue, Backspace, e as any)}>
         <Display result={result} value={value}></Display>
       </DisplayWrapper>
-      <Grid >
+      <Grid>
         <CalcButton value={1} onClick={(e) => typeNumber(e)}>1</CalcButton>
         <CalcButton value={2} onClick={(e) => typeNumber(e)}>2</CalcButton>
         <CalcButton value={3} onClick={(e) => typeNumber(e)}>3</CalcButton>
@@ -136,11 +124,11 @@ export default function Calculator({children}: Props ) {
         <CalcButton value={9} onClick={(e) => typeNumber(e)}>9</CalcButton>
         <CalcButton value={0} onClick={(e) => typeNumber(e)}>0</CalcButton>
         <CalcButton onClick={Clear}>C</CalcButton>
-        <CalcButton onClick={() => {Calculate("")}}>=</CalcButton>
-        <CalcButton value={"+"} onClick={Plus}>+</CalcButton>
-        <CalcButton onClick={Minus}>-</CalcButton>
-        <CalcButton onClick={Multiply}>*</CalcButton>
-        <CalcButton onClick={Divide}>/</CalcButton>
+        <CalcButton onClick={Calculate}>=</CalcButton>
+        <CalcButton value={"+"} onClick={() => Plus(Number(value), setValue)}>+</CalcButton>
+        <CalcButton onClick={() => Minus(Number(value), setValue)}>-</CalcButton>
+        <CalcButton onClick={() => Multiply(Number(value), setValue)}>*</CalcButton>
+        <CalcButton onClick={() => Divide(Number(value), setValue)}>/</CalcButton>
         <CalcButton onClick={() => Backspace(value, setValue)}>d</CalcButton>
       </Grid>
         

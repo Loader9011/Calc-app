@@ -1,11 +1,8 @@
 import React, { useState, useEffect, Children } from "react";
 import { styled, ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme, pinkTheme, GlobalStyles } from "./styles/globalStyles";
-import Header from "./components/header";
-import Calculator from "./components/calculator";
-import Display from "./components/display";
-import PatterCommand from "./components/patternCommand";
-import Qwe from "./components/qwe";
+import Header from "./components/UI/header/header";
+import Calculator from "./components/calculator/calculator";
 
 function App() {
   const [theme, setTheme] = useState(setSavedTheme);
@@ -32,7 +29,6 @@ return (
       <GlobalStyles/>
       <Header theme={setSavedTheme} setTheme={setTheme}></Header>
       <Calculator><div></div></Calculator>
-    {/* <PatterCommand></PatterCommand> */}
     </ThemeProvider>
   );
 }

@@ -11,6 +11,7 @@ function App() {
     let getSavedTheme = localStorage.getItem("savedTheme")
     if(!getSavedTheme){
       setTheme(lightTheme)
+      return
     }
     let savedTheme = JSON.parse(getSavedTheme as string);
     return savedTheme
@@ -27,7 +28,7 @@ function App() {
 return (
     <ThemeProvider theme={theme}>
       <GlobalStyles/>
-      <Header theme={setSavedTheme} setTheme={setTheme}></Header>
+      <Header setTheme={setTheme}></Header>
       <Calculator><div></div></Calculator>
     </ThemeProvider>
   );

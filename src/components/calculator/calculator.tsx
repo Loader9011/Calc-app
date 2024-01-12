@@ -1,5 +1,5 @@
 import React, { BaseSyntheticEvent, Key, KeyboardEvent, MouseEventHandler, useEffect, useState } from 'react'
-import {Wrapper, DisplayWrapper, Grid, CalcButton, CalcContainer, CalcBtn, FlexContainer, GrindOneColumn} from './calcComponentStyle'
+import {Wrapper, DisplayWrapper, Grid, CalcBtn, FlexContainer, GrindOneColumn} from './calcComponentStyle'
 import Display from '../display'
 import { Backspace, handleKeyDown, typeNumber } from '../../assets/keyboard'
 import { numbers, operations, operationsBtn } from '../../assets/constaints'
@@ -53,6 +53,9 @@ export default function Calculator({children}: Props ) {
         if(Number(e.key) === number){
           setValue(value.concat(String(number)))
         }
+        if(e.key === "Backspace"){
+          Backspace(value, setValue)
+        }
     });
   }
 
@@ -64,9 +67,9 @@ export default function Calculator({children}: Props ) {
       </DisplayWrapper>
       <FlexContainer>
         <Grid>
-          <CalcBtn>ac</CalcBtn>
-          <CalcBtn>del</CalcBtn>
-          <CalcBtn>0</CalcBtn>
+          <CalcBtn className='secondary'>ac</CalcBtn>
+          <CalcBtn className='secondary' onClick={() => Backspace(value, setValue)}>del</CalcBtn>
+          <CalcBtn className='secondary' onClick={() => setValue("")}>c</CalcBtn>
           {numbers.filter(Number).map((number: number | string) => 
             <CalcBtn
               value={number} 
@@ -74,16 +77,17 @@ export default function Calculator({children}: Props ) {
                 {number.toString()}
             </CalcBtn>
           )}
+          <CalcBtn>0</CalcBtn>
         </Grid>
         <GrindOneColumn>
           {operationsBtn.map((operation: number | string) => 
-            <CalcBtn>
+            <CalcBtn className='secondary'>
               {operation.toString()}
             </CalcBtn>)}
+        <CalcBtn className='secondary'>=</CalcBtn>
         </GrindOneColumn>
       </FlexContainer>
-      <GrindOneColumn style={{justifyContent: 'right', display: 'flex', margin: 0, maxWidth: 274}}>
-        <CalcBtn>=</CalcBtn>
+      <GrindOneColumn>
       </GrindOneColumn>
         
     </Wrapper>

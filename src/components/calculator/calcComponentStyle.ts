@@ -26,10 +26,6 @@ const CalcBtn = styled.button`
   }
 `
 
-const CalcContainer = styled.div`
-  width: 300px;
-`
-
 const DisplayWrapper = styled.div`
   font-size: 18px;
   word-wrap: normal;
@@ -43,19 +39,14 @@ grid-template-columns: repeat(3, 1fr);
 `
 
 export const GrindOneColumn = styled(Grid)`
-  margin-left: 18px;
+  padding-left: 18px;
   grid-template-columns: repeat(1, 1fr);
+  justify-content: right;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  max-width: 274px;
 `
 
-const CalcButton = styled.button`
-  font-size: 24px;
-  cursor: pointer;
-  border-radius: 50%;
-  padding: 13px 20px;
-  border:none;
-  &:hover{
-    opacity: 0.6;
-  }
-`
 
-export {Wrapper, DisplayWrapper, Grid, CalcButton, CalcContainer, CalcBtn}
+export {Wrapper, DisplayWrapper, Grid, CalcBtn}

@@ -2,7 +2,7 @@ import { darkTheme, lightTheme, pinkTheme } from "../../../styles/globalStyles"
 import { HeaderButton, Container, HeaderElement } from "./header.sc"
 
 
-export default function Header({theme, setTheme}: any) {
+export default function Header({setTheme}: any) {
   
   return (
     <Container>

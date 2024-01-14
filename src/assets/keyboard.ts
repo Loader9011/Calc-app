@@ -5,8 +5,8 @@ export const Backspace = (value: string, setValue: React.Dispatch<React.SetState
     setValue(value.substring(0, value.length - 1))
   } 
 
-export const typeNumber = (e : BaseSyntheticEvent, setValue: Function, value: string) => {
-    e.preventDefault()
+export const typeNumber = (e : BaseSyntheticEvent, setValue: Function, value: string, setOperationValue: Function, operationValue: string) => {
+    setOperationValue(operationValue.concat(e.currentTarget.value))
     setValue(value.concat(e.currentTarget.value))
   }
 

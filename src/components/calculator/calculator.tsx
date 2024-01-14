@@ -11,35 +11,43 @@ type Props = {
 }
 
 const calculator = new CommandCalculator();
-let result = 0;
-const Plus = (result: number, setValue: Function) => {
+const Plus = (result: number, setValue: Function, operationLine: string, setOperationLine: Function) => {
   setValue("")
+  setOperationLine(operationLine + " + " )
   calculator.execute(operations.add, result)
   console.log(result)
 }
-const Minus = (result: number, setValue: Function) => {
+const Minus = (result: number, setValue: Function, operationLine: string, setOperationLine: Function) => {
   setValue("")
+  setOperationLine(operationLine + " - " )
   calculator.execute(operations.minus, result)
   console.log(result)
-  setValue("")
 }
-const Multiply = (result: number, setValue: Function) => {
+const Multiply = (result: number, setValue: Function, operationLine: string, setOperationLine: Function) => {
   setValue("")
+  setOperationLine(operationLine + " * " )
   calculator.execute(operations.multiply, result)
   console.log(result)
 }
-const Divide = (result: number, setValue: Function) => {
+const Divide = (result: number, setValue: Function, operationLine: string, setOperationLine: Function) => {
   setValue("")
+  setOperationLine(operationLine + " / " )
   calculator.execute(operations.divide, result)
   console.log(result)
 }
+const Clear = (setValue: Function, setOperationLine: Function) => {
+  setValue("")
+  setOperationLine("")
+}
 
 export default function Calculator({children}: Props ) {
+  const [result, setResult] = useState(0)
   const [value, setValue] = useState("")
+  const [operationLine, setOperationLine] = useState("")
   
   useEffect(() => {
-    result = calculator.getValue()
-  }, [value, result])
+    setResult(calculator.getValue())
+  }, [value])
 
   function isNumber(value: any){
     if(typeof value === 'number'){
@@ -49,7 +57,8 @@ export default function Calculator({children}: Props ) {
  
   function keyPressed (e: keyboardKey) {
     const filtredNumbers = numbers.filter(isNumber)
-    filtredNumbers.forEach((number: Number) => {
+    if(e.keyCode === 48) setValue(value.concat("0"))
+    filtredNumbers.forEach((number: number) => {
         if(Number(e.key) === number){
           setValue(value.concat(String(number)))
         }
@@ -63,28 +72,29 @@ export default function Calculator({children}: Props ) {
     <div onKeyDown={(e: KeyboardEvent) => keyPressed(e)}>
     <Wrapper>
       <DisplayWrapper>
-        <Display result={result} value={value}></Display>
+        <Display result={result} operationLine={operationLine}></Display>
       </DisplayWrapper>
       <FlexContainer>
         <Grid>
-          <CalcBtn className='secondary'>ac</CalcBtn>
+          <CalcBtn onClick={() => setResult(calculator.clearValue())} className='secondary'>ac</CalcBtn>
           <CalcBtn className='secondary' onClick={() => Backspace(value, setValue)}>del</CalcBtn>
-          <CalcBtn className='secondary' onClick={() => setValue("")}>c</CalcBtn>
+          <CalcBtn className='secondary' onClick={() => Clear(setValue, setOperationLine)}>c</CalcBtn>
           {numbers.filter(Number).map((number: number | string) => 
             <CalcBtn
+              key={number}
               value={number} 
-              onClick={(e) => typeNumber(e, setValue, value)}>
+              onClick={(e) => typeNumber(e, setValue, value, setOperationLine, operationLine)}>
                 {number.toString()}
             </CalcBtn>
           )}
-          <CalcBtn>0</CalcBtn>
+          <CalcBtn value={0} onClick={(e) => typeNumber(e, setValue, value, setOperationLine, operationLine)}>0</CalcBtn>
         </Grid>
         <GrindOneColumn>
-          {operationsBtn.map((operation: number | string) => 
-            <CalcBtn className='secondary'>
-              {operation.toString()}
-            </CalcBtn>)}
-        <CalcBtn className='secondary'>=</CalcBtn>
+            <CalcBtn onClick={() => Divide(Number(value), setValue, operationLine, setOperationLine)} className='secondary'>/</CalcBtn>
+            <CalcBtn onClick={() => Multiply(Number(value), setValue, operationLine, setOperationLine)} className='secondary'>*</CalcBtn>
+            <CalcBtn onClick={() => Minus(Number(value), setValue, operationLine, setOperationLine)} className='secondary'>-</CalcBtn>
+            <CalcBtn onClick={() => Plus(Number(value), setValue, operationLine, setOperationLine)} className='secondary'>+</CalcBtn>
+            <CalcBtn onClick={() => setResult(calculator.getValue())} className='secondary'>=</CalcBtn>
         </GrindOneColumn>
       </FlexContainer>
       <GrindOneColumn>

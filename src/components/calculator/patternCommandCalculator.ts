@@ -44,5 +44,10 @@ interface romanType {
         }
         return value
     }
+    clearValue(){
+      this.actionIndex = 0
+      let value = 0
+      return value
+    }
 }
   

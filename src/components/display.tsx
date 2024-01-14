@@ -2,12 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 type Props = {
-  value: string,
+  operationLine: string,
   result: number,
   usedValuesArrary?: number[]
 }
 
 const Values = styled.div`
+  min-height: 22px;
   display: flex;
   gap: 3px;
 `
@@ -17,11 +18,11 @@ const ValueLine = styled.div`
 `
 
 
-export default function Display({value, result}: Props) {
+export default function Display({operationLine, result}: Props) {
   return (
     <ValueLine> 
       <Values>
-        {value}
+        {operationLine}
       </Values>
       <Values>
         {`= `}{result}

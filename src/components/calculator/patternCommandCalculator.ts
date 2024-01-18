@@ -1,5 +1,3 @@
-import { operations } from "../../assets/constaints";
-
 interface romanType {
     [index: number]: object;
   }

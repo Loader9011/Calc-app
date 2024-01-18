@@ -9,10 +9,9 @@ flex-direction: column;
 gap: 15px;
 `
 
-export const FlexContainer = styled.div`
+const FlexContainer = styled.div`
 display:flex;
 `
-
 
 const CalcBtn = styled.button`
   width: 55px;
@@ -38,7 +37,7 @@ gap: 16px 18px;
 grid-template-columns: repeat(3, 1fr);
 `
 
-export const GrindOneColumn = styled(Grid)`
+const GrindOneColumn = styled(Grid)`
   padding-left: 18px;
   grid-template-columns: repeat(1, 1fr);
   justify-content: right;
@@ -49,4 +48,4 @@ export const GrindOneColumn = styled(Grid)`
 `
 
 
-export {Wrapper, DisplayWrapper, Grid, CalcBtn}
+export {Wrapper, DisplayWrapper, Grid, CalcBtn, FlexContainer, GrindOneColumn}

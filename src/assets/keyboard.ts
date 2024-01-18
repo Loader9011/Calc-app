@@ -1,7 +1,6 @@
 import { keyboardKey } from "@testing-library/user-event"
 import { BaseSyntheticEvent } from "react"
 import { numbers } from "./constaints"
-import { equal } from "assert"
 
 
 export const Backspace = (value: string, setValue: Function): void => {

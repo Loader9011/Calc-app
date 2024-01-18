@@ -1,17 +1,13 @@
-import React, { BaseSyntheticEvent, Key, KeyboardEvent, MouseEventHandler, useEffect, useMemo, useState } from 'react'
+import React, {KeyboardEvent, useEffect, useState } from 'react'
 import {Wrapper, DisplayWrapper, Grid, CalcBtn, FlexContainer, GrindOneColumn} from './calcComponentStyle'
 import Display from '../display'
-import { Backspace, handleKeyDown, keyPressed, typeNumber } from '../../assets/keyboard'
-import { numbers, operations, operationsBtn } from '../../assets/constaints'
-import { CommandCalculator } from './patternCommandCalculator'
-import { keyboardKey } from '@testing-library/user-event'
+import { Backspace, keyPressed, typeNumber } from '../../assets/keyboard'
+import { numbers, operations } from '../../assets/constaints'
 import { calculator, Plus, Minus, Divide, Calculate, Multiply, Clear } from './calculatorFunctions'
 
 type Props = {
   children: React.ReactNode,
 }
-
-
 
 export default function Calculator({children}: Props ) {
   const [result, setResult] = useState(0)
@@ -19,6 +15,7 @@ export default function Calculator({children}: Props ) {
   const [operationLine, setOperationLine] = useState("")
   const [lastUsedOperation, setLastUsedOperation] = useState(operations.add)
   
+
   useEffect(() => {
     setResult(calculator.getValue())
   }, [value, operationLine])
@@ -55,9 +52,7 @@ export default function Calculator({children}: Props ) {
       </FlexContainer>
       <GrindOneColumn>
       </GrindOneColumn>
-        
     </Wrapper>
-      
     </div>
   )
 }

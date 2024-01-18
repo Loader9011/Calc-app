@@ -21,8 +21,7 @@ export default function Calculator({children}: Props ) {
   
   useEffect(() => {
     setResult(calculator.getValue())
-  }, [value])
-
+  }, [value, operationLine])
 
 
   return (
@@ -47,10 +46,10 @@ export default function Calculator({children}: Props ) {
           <CalcBtn value={0} onClick={(e) => typeNumber(e, setValue, value, setOperationLine, operationLine)}>0</CalcBtn>
         </Grid>
         <GrindOneColumn>
-            <CalcBtn onClick={() => Divide(Number(value), setValue, operationLine, setOperationLine, setLastUsedOperation)} className='secondary'>/</CalcBtn>
-            <CalcBtn onClick={() => Multiply(Number(value), setValue, operationLine, setOperationLine, setLastUsedOperation)} className='secondary'>*</CalcBtn>
-            <CalcBtn onClick={() => Minus(Number(value), setValue, operationLine, setOperationLine, setLastUsedOperation)} className='secondary'>-</CalcBtn>
-            <CalcBtn onClick={() => Plus(Number(value), setValue, operationLine, setOperationLine, setLastUsedOperation)} className='secondary'>+</CalcBtn>
+            <CalcBtn onClick={() => Divide(Number(value), setValue, operationLine, setOperationLine, lastUsedOperation, setLastUsedOperation)} className='secondary'>/</CalcBtn>
+            <CalcBtn onClick={() => Multiply(Number(value), setValue, operationLine, setOperationLine, lastUsedOperation, setLastUsedOperation)} className='secondary'>*</CalcBtn>
+            <CalcBtn onClick={() => Minus(Number(value), setValue, operationLine, setOperationLine, lastUsedOperation, setLastUsedOperation)} className='secondary'>-</CalcBtn>
+            <CalcBtn onClick={() => Plus(Number(value), setValue, operationLine, setOperationLine, lastUsedOperation, setLastUsedOperation)} className='secondary'>+</CalcBtn>
             <CalcBtn onClick={() => Calculate(lastUsedOperation, setValue, result, value)} className='secondary'>=</CalcBtn>
         </GrindOneColumn>
       </FlexContainer>

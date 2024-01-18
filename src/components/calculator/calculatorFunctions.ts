@@ -1,44 +1,62 @@
-import { operations } from "../../assets/constaints";
+import { operations, operationsBtn } from "../../assets/constaints";
 import { CommandCalculator } from "./patternCommandCalculator";
 
 const calculator = new CommandCalculator();
-const Plus = (result: number, setValue: Function, operationLine: string, setOperationLine: Function, setLastUsedOperation: Function) => {
-  setValue("")
-  setLastUsedOperation(operations.add)
-  setOperationLine(operationLine + " + " )
-  calculator.execute(operations.add, result)
-  console.log(result)
+
+const GetLastChar = (operationLine: string) => {
+  let result = true;
+  let stringLength = operationLine.length
+  let lastChar = operationLine.substring(stringLength - 2).replace(" ", '')
+  operationsBtn.map((elem: string) => {
+    if(elem === lastChar){
+      result = false
+    }
+  })
+  return result
 }
-const Minus = (result: number, setValue: Function, operationLine: string, setOperationLine: Function, setLastUsedOperation: Function) => {
-  setLastUsedOperation(operations.minus)
-  calculator.execute(operations.minus, result)
-  setValue("")
-  setOperationLine(operationLine + " - " )
-  console.log(result)
-}
-const Multiply = (result: number, setValue: Function, operationLine: string, setOperationLine: Function, setLastUsedOperation: Function) => {
-  setValue("")
-  setOperationLine(operationLine + " * " )
-  calculator.execute(operations.multiply, result)
-  console.log(result)
-  setLastUsedOperation(operations.multiply)
-}
-const Divide = (result: number, setValue: Function, operationLine: string, setOperationLine: Function, setLastUsedOperation: Function) => {
-  setValue("")
-  setOperationLine(operationLine + " / " )
-  calculator.execute(operations.divide, result)
-  console.log(result)
-  setLastUsedOperation(operations.divide)
-}
+
 const Calculate = (lastUsedOperation: string, setValue: Function, result: number, value: string) => {
   setValue("")
   calculator.execute(lastUsedOperation, Number(value))
-  console.log(value)
   console.log(calculator.actions)
 }
 const Clear = (setValue: Function, setOperationLine: Function) => {
   setValue("")
   setOperationLine("")
 }
+
+const Plus = (result: number, setValue: Function, operationLine: string, setOperationLine: Function, lastUsedOperation: string, setLastUsedOperation: Function) => {
+  if(GetLastChar(operationLine)){
+    setValue("")
+    setLastUsedOperation(operations.add)
+    setOperationLine(operationLine + " + " )
+    calculator.execute(lastUsedOperation, result)
+  }
+}
+const Minus = (result: number, setValue: Function, operationLine: string, setOperationLine: Function, lastUsedOperation: string, setLastUsedOperation: Function) => {
+  if(GetLastChar(operationLine)){
+    setValue("")
+    setLastUsedOperation(operations.minus)
+    setOperationLine(operationLine + " - " )
+    calculator.execute(lastUsedOperation, result)
+  }
+}
+const Multiply = (result: number, setValue: Function, operationLine: string, setOperationLine: Function, lastUsedOperation: string, setLastUsedOperation: Function) => {
+  if(GetLastChar(operationLine)){
+    setValue("")
+    setOperationLine(operationLine + " * " )
+    setLastUsedOperation(operations.multiply)
+    calculator.execute(lastUsedOperation, result)
+  }
+}
+const Divide = (result: number, setValue: Function, operationLine: string, setOperationLine: Function, lastUsedOperation: string, setLastUsedOperation: Function) => {
+  if(GetLastChar(operationLine)){
+    setValue("")
+    setOperationLine(operationLine + " / " )
+    setLastUsedOperation(operations.divide)
+    calculator.execute(lastUsedOperation, result)
+  }
+}
+
 
 export {calculator, Plus, Minus, Divide, Calculate, Multiply, Clear}

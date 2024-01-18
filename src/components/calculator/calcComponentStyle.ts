@@ -14,6 +14,9 @@ display:flex;
 `
 
 const CalcBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 55px;
   height: 55px;
   border-radius: 50%;

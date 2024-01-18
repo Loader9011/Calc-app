@@ -20,9 +20,11 @@ const Calculate = (lastUsedOperation: string, setValue: Function, result: number
   calculator.execute(lastUsedOperation, Number(value))
   console.log(calculator.actions)
 }
-const Clear = (setValue: Function, setOperationLine: Function) => {
+const Clear = (setValue: Function, setOperationLine: Function, setLastUsedOperation: Function) => {
   setValue("")
   setOperationLine("")
+  calculator.clearValue()
+  setLastUsedOperation(operations.add)
 }
 
 const Plus = (result: number, setValue: Function, operationLine: string, setOperationLine: Function, lastUsedOperation: string, setLastUsedOperation: Function) => {

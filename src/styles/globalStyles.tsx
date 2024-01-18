@@ -39,4 +39,13 @@ export const darkTheme = {
    .secondary{
     color: ${props => props.theme.itemsSecondary};
    }
+   #ba{
+    color: ${props => props.theme.itemsSecondary};
+   }
+   svg{
+    fill: ${props => props.theme.itemsSecondary};
+    transition: all 1ms ease;
+    height: 0.9em;
+    width: 0.9em;
+   }
   `
